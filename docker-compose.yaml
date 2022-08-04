@@ -1,0 +1,34 @@
+services:
+  mysql_opiana:
+    image: mysql:oracle
+    container_name: mysql_opiana
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_opiana_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=SECRET_ROOT
+      - MYSQL_PASSWORD=SECRET
+      - MYSQL_USER=ADMIN
+      - MYSQL_DATABASE=opiana_db
+    networks:
+      - opiana_networks
+  app:
+    build: .
+    image: opiana_app_be:1.0.0
+    container_name: opiana_app_be
+    ports:
+      - 9090:9090
+    networks:
+      - opiana_networks
+    environment:
+      - mysql.DB_HOST=mysql_opiana
+    depends_on:
+      - mysql_opiana
+    restart: always
+
+volumes:
+  mysql_opiana_data: {}
+
+networks:
+  opiana_networks: {}

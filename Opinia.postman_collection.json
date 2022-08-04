@@ -1,0 +1,868 @@
+{
+	"info": {
+		"_postman_id": "130478cf-02cf-4c63-9b58-7e4678177b87",
+		"name": "Opinia",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12114597"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullname\":\"fajari\",\n    \"phone\":\"0891221221\",\n    \"password\":\"fajari123\",\n    \"email\":\"fajari@mail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{port}}/api/auth/register",
+							"host": [
+								"{{port}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register Duplicate Email",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"fullname\":\"fajar\",\n    \"phone\":\"0891221221\",\n    \"password\":\"fajar123\",\n    \"email\":\"fajar@mail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{port}}/api/auth/register",
+									"host": [
+										"{{port}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 03 Aug 2022 23:43:21 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "85"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": false,\n    \"message\": \"Failed to process\",\n    \"errors\": [\n        \"Duplicate email\"\n    ],\n    \"data\": {}\n}"
+						},
+						{
+							"name": "Register Succss",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"fullname\":\"fajari\",\n    \"phone\":\"0891221221\",\n    \"password\":\"fajari123\",\n    \"email\":\"fajari@mail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{port}}/api/auth/register",
+									"host": [
+										"{{port}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 03 Aug 2022 23:44:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "409"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"OK!\",\n    \"errors\": null,\n    \"data\": {\n        \"ID\": 2,\n        \"CreatedAt\": \"2022-08-04T06:44:28.171+07:00\",\n        \"UpdatedAt\": \"2022-08-04T06:44:28.171+07:00\",\n        \"DeletedAt\": null,\n        \"fullname\": \"fajari\",\n        \"phone\": \"0891221221\",\n        \"email\": \"fajari@mail.com\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMiIsImV4cCI6MTY5MTEwNjI2OCwiaWF0IjoxNjU5NTcwMjY4LCJpc3MiOiJxd2VycSJ9.iYJn4zSQZNLeul54bNDg0PdK4saGwGqoVTH6ymh6U_s\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var token = jsonData.data.token",
+									"pm.collectionVariables.set(\"token\", token);",
+									"console.log(token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\":\"fajari123\",\n    \"email\":\"fajari@mail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{port}}/api/auth/login",
+							"host": [
+								"{{port}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\":\"fajari123\",\n    \"email\":\"fajari@mail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{port}}/api/auth/login",
+									"host": [
+										"{{port}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 03 Aug 2022 23:45:22 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "409"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"OK!\",\n    \"errors\": null,\n    \"data\": {\n        \"ID\": 2,\n        \"CreatedAt\": \"2022-08-04T06:44:28.171+07:00\",\n        \"UpdatedAt\": \"2022-08-04T06:44:28.171+07:00\",\n        \"DeletedAt\": null,\n        \"fullname\": \"fajari\",\n        \"phone\": \"0891221221\",\n        \"email\": \"fajari@mail.com\",\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMiIsImV4cCI6MTY5MTEwNjMyMiwiaWF0IjoxNjU5NTcwMzIyLCJpc3MiOiJxd2VycSJ9._orJlEH0Z0O98g9xt_-2qL2fF_tyGUuvzPIfh5m9QOY\"\n    }\n}"
+						},
+						{
+							"name": "Login Failed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\":\"fajari1231\",\n    \"email\":\"fajari@mail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{port}}/api/auth/login",
+									"host": [
+										"{{port}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 03 Aug 2022 23:45:36 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "110"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": false,\n    \"message\": \"Please check again your credential\",\n    \"errors\": [\n        \"Invalid your credential\"\n    ],\n    \"data\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "Check Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{port}}/api/user/profile",
+							"host": [
+								"{{port}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Check Profile No token found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{port}}/api/user/profile",
+									"host": [
+										"{{port}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"profile"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 03 Aug 2022 23:48:01 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "94"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": false,\n    \"message\": \"Failed to process request\",\n    \"errors\": [\n        \"No token found\"\n    ],\n    \"data\": null\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Create Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"Post 1\",\n    \"description\":\"desc post 1\",\n    \"post_type_id\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{port}}/api/post",
+							"host": [
+								"{{port}}"
+							],
+							"path": [
+								"api",
+								"post"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Post",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\":\"Post 1\",\n    \"description\":\"desc post 1\",\n    \"post_type_id\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{port}}/api/post",
+									"host": [
+										"{{port}}"
+									],
+									"path": [
+										"api",
+										"post"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 04 Aug 2022 00:44:04 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "557"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"OK\",\n    \"errors\": null,\n    \"data\": {\n        \"ID\": 2,\n        \"CreatedAt\": \"2022-08-04T07:44:04.227+07:00\",\n        \"UpdatedAt\": \"2022-08-04T07:44:04.227+07:00\",\n        \"DeletedAt\": null,\n        \"title\": \"Post 1\",\n        \"description\": \"desc post 1\",\n        \"user\": {\n            \"ID\": 1,\n            \"CreatedAt\": \"2022-08-04T07:40:40.841+07:00\",\n            \"UpdatedAt\": \"2022-08-04T07:40:40.841+07:00\",\n            \"DeletedAt\": null,\n            \"fullname\": \"fajari\",\n            \"phone\": \"0891221221\",\n            \"email\": \"fajari@mail.com\"\n        },\n        \"post_type\": {\n            \"ID\": 1,\n            \"CreatedAt\": \"2022-08-04T07:40:16.578+07:00\",\n            \"UpdatedAt\": \"2022-08-04T07:40:16.578+07:00\",\n            \"DeletedAt\": null,\n            \"jenis\": \"Opini\",\n            \"type\": \"Artikel\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get All Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{port}}/api/post",
+							"host": [
+								"{{port}}"
+							],
+							"path": [
+								"api",
+								"post"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get All Post",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{port}}/api/post",
+									"host": [
+										"{{port}}"
+									],
+									"path": [
+										"api",
+										"post"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 04 Aug 2022 00:54:18 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1066"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"OK\",\n    \"errors\": null,\n    \"data\": [\n        {\n            \"ID\": 1,\n            \"CreatedAt\": \"2022-08-04T07:40:56.029+07:00\",\n            \"UpdatedAt\": \"2022-08-04T07:40:56.029+07:00\",\n            \"DeletedAt\": null,\n            \"title\": \"Post 1\",\n            \"description\": \"desc post 1\",\n            \"user\": {\n                \"ID\": 1,\n                \"CreatedAt\": \"2022-08-04T07:40:40.841+07:00\",\n                \"UpdatedAt\": \"2022-08-04T07:40:40.841+07:00\",\n                \"DeletedAt\": null,\n                \"fullname\": \"fajari\",\n                \"phone\": \"0891221221\",\n                \"email\": \"fajari@mail.com\"\n            },\n            \"post_type\": {\n                \"ID\": 2,\n                \"CreatedAt\": \"2022-08-04T07:40:16.578+07:00\",\n                \"UpdatedAt\": \"2022-08-04T07:40:16.578+07:00\",\n                \"DeletedAt\": null,\n                \"jenis\": \"Cerpen\",\n                \"type\": \"Artikel\"\n            }\n        },\n        {\n            \"ID\": 2,\n            \"CreatedAt\": \"2022-08-04T07:44:04.227+07:00\",\n            \"UpdatedAt\": \"2022-08-04T07:44:04.227+07:00\",\n            \"DeletedAt\": null,\n            \"title\": \"Post 1\",\n            \"description\": \"desc post 1\",\n            \"user\": {\n                \"ID\": 1,\n                \"CreatedAt\": \"2022-08-04T07:40:40.841+07:00\",\n                \"UpdatedAt\": \"2022-08-04T07:40:40.841+07:00\",\n                \"DeletedAt\": null,\n                \"fullname\": \"fajari\",\n                \"phone\": \"0891221221\",\n                \"email\": \"fajari@mail.com\"\n            },\n            \"post_type\": {\n                \"ID\": 1,\n                \"CreatedAt\": \"2022-08-04T07:40:16.578+07:00\",\n                \"UpdatedAt\": \"2022-08-04T07:40:16.578+07:00\",\n                \"DeletedAt\": null,\n                \"jenis\": \"Opini\",\n                \"type\": \"Artikel\"\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Post by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{port}}/api/post/1",
+							"host": [
+								"{{port}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Post by Id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{port}}/api/post/1",
+									"host": [
+										"{{port}}"
+									],
+									"path": [
+										"api",
+										"post",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 04 Aug 2022 00:55:44 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "558"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"OK\",\n    \"errors\": null,\n    \"data\": {\n        \"ID\": 1,\n        \"CreatedAt\": \"2022-08-04T07:40:56.029+07:00\",\n        \"UpdatedAt\": \"2022-08-04T07:40:56.029+07:00\",\n        \"DeletedAt\": null,\n        \"title\": \"Post 1\",\n        \"description\": \"desc post 1\",\n        \"user\": {\n            \"ID\": 1,\n            \"CreatedAt\": \"2022-08-04T07:40:40.841+07:00\",\n            \"UpdatedAt\": \"2022-08-04T07:40:40.841+07:00\",\n            \"DeletedAt\": null,\n            \"fullname\": \"fajari\",\n            \"phone\": \"0891221221\",\n            \"email\": \"fajari@mail.com\"\n        },\n        \"post_type\": {\n            \"ID\": 2,\n            \"CreatedAt\": \"2022-08-04T07:40:16.578+07:00\",\n            \"UpdatedAt\": \"2022-08-04T07:40:16.578+07:00\",\n            \"DeletedAt\": null,\n            \"jenis\": \"Cerpen\",\n            \"type\": \"Artikel\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Post by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"Post 1221111\",\n    \"description\":\"desc post 1\",\n    \"post_type_id\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{port}}/api/post/1",
+							"host": [
+								"{{port}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Post by ID",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\":\"Post 1221111\",\n    \"description\":\"desc post 1\",\n    \"post_type_id\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{port}}/api/post/2",
+									"host": [
+										"{{port}}"
+									],
+									"path": [
+										"api",
+										"post",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 04 Aug 2022 01:54:15 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "248"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"OK\",\n    \"errors\": null,\n    \"data\": {\n        \"id\": 2,\n        \"title\": \"Post 1221111\",\n        \"description\": \"desc post 1\",\n        \"user\": {\n            \"id\": 1,\n            \"fullname\": \"fajari\",\n            \"phone\": \"0891221221\",\n            \"email\": \"fajari@mail.com\"\n        },\n        \"post_type\": {\n            \"id\": 1,\n            \"jenis\": \"Opini\",\n            \"type\": \"Artikel\"\n        }\n    }\n}"
+						},
+						{
+							"name": "Update Post by ID You dont have permission",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\":\"Post 1221111\",\n    \"description\":\"desc post 1\",\n    \"post_type_id\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{port}}/api/post/1",
+									"host": [
+										"{{port}}"
+									],
+									"path": [
+										"api",
+										"post",
+										"1"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 04 Aug 2022 01:54:23 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "98"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": false,\n    \"message\": \"You dont have permission\",\n    \"errors\": [\n        \"You are not the owner\"\n    ],\n    \"data\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Post by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{port}}/api/post/1",
+							"host": [
+								"{{port}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete Post by ID",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{port}}/api/post/1",
+									"host": [
+										"{{port}}"
+									],
+									"path": [
+										"api",
+										"post",
+										"1"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 04 Aug 2022 01:54:07 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "98"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": false,\n    \"message\": \"You dont have permission\",\n    \"errors\": [\n        \"You are not the owner\"\n    ],\n    \"data\": {}\n}"
+						},
+						{
+							"name": "Delete Post by ID",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{port}}/api/post/3",
+									"host": [
+										"{{port}}"
+									],
+									"path": [
+										"api",
+										"post",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 04 Aug 2022 01:54:50 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"Deleted\",\n    \"errors\": null,\n    \"data\": {}\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "port",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
