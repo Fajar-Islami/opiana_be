@@ -13,8 +13,8 @@ import (
 
 // PostService
 type PostService interface {
-	Insert(b dto.PostCreateDTO) entity.Post
-	Update(b dto.PostUpdateDTO) entity.Post
+	Insert(b dto.PostCreateDTO) (entity.Post, error)
+	Update(b dto.PostUpdateDTO) (entity.Post, error)
 	Delete(b entity.Post)
 	All() []entity.Post
 	FindById(postID uint64) entity.Post
@@ -31,7 +31,7 @@ func NewPostService(postRepository repository.PostRepository) PostService {
 	}
 }
 
-func (service *postService) Insert(b dto.PostCreateDTO) entity.Post {
+func (service *postService) Insert(b dto.PostCreateDTO) (entity.Post, error) {
 
 	post := entity.Post{}
 	err := smapping.FillStruct(&post, smapping.MapFields(&b))
@@ -39,28 +39,25 @@ func (service *postService) Insert(b dto.PostCreateDTO) entity.Post {
 		log.Fatalf("Failed map %v: ", err)
 	}
 
-	res := service.postRepository.InsertPost(post)
-	return res
+	res, err := service.postRepository.InsertPost(post)
+	if err != nil {
+		return entity.Post{}, err
+	}
+	return res, err
 }
 
-func (service *postService) Update(b dto.PostUpdateDTO) entity.Post {
-	// post := entity.Post{
-	// 	ID:          b.ID,
-	// 	Title:       b.Title,
-	// 	Description: b.Description,
-	// 	UserID:      b.UserID,
-	// 	PostTypeID:  b.PostTypeID,
-	// }
-	fmt.Println("b.ID=======", b.ID)
+func (service *postService) Update(b dto.PostUpdateDTO) (entity.Post, error) {
 	post := entity.Post{}
 	err := smapping.FillStruct(&post, smapping.MapFields(&b))
 	if err != nil {
 		log.Fatalf("Failed map %v: ", err)
 	}
 
-	res := service.postRepository.UpdatePost(post)
-	// res := entity.Post{}
-	return res
+	res, err := service.postRepository.UpdatePost(post)
+	if err != nil {
+		return entity.Post{}, err
+	}
+	return res, nil
 }
 
 func (service *postService) Delete(b entity.Post) {

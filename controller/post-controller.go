@@ -76,9 +76,6 @@ func (c *postController) FindByID(context *gin.Context) {
 func (c *postController) Insert(context *gin.Context) {
 	var postCreateDTO dto.PostCreateDTO
 
-	// a, _ := json.Marshal(context.Request.Body)
-	// fmt.Println("a====", string(a))
-
 	errDTO := context.ShouldBind(&postCreateDTO)
 	if errDTO != nil {
 		res := helper.BuildErrorResponse("Failed to process request", errDTO.Error(), helper.EmptyObj{})
@@ -92,7 +89,14 @@ func (c *postController) Insert(context *gin.Context) {
 			postCreateDTO.UserID = convertedUserID
 		}
 
-		result := c.postService.Insert(postCreateDTO)
+		result, err := c.postService.Insert(postCreateDTO)
+
+		if err != nil {
+			resp := helper.BuildErrorResponse("Failed to process request", err.Error(), helper.EmptyObj{})
+			context.AbortWithStatusJSON(http.StatusBadRequest, resp)
+			return
+		}
+
 		response := helper.BuildResponse(true, "OK", result)
 		context.JSON(http.StatusCreated, response)
 	}
@@ -130,7 +134,13 @@ func (c *postController) Update(context *gin.Context) {
 			postUpdateDTO.UserID = userid
 		}
 
-		result := c.postService.Update(postUpdateDTO)
+		result, err := c.postService.Update(postUpdateDTO)
+		if err != nil {
+			resp := helper.BuildErrorResponse("Failed to process request", err.Error(), helper.EmptyObj{})
+			context.AbortWithStatusJSON(http.StatusBadRequest, resp)
+			return
+		}
+
 		response := helper.BuildResponse(true, "OK", result)
 		context.JSON(http.StatusOK, response)
 	} else {
